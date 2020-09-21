@@ -1,0 +1,31 @@
+{
+  "name": "rolling-logs-new-backend",
+  "version": "1.0.0",
+  "description": "New rolling logs backend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "set NODE_ENV=development && nodemon appserver.js",
+    "start": "set NODE_ENV=production && nodemon appserver.js"
+  },
+  "author": "Pravas",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.357.0",
+    "bcryptjs": "^2.4.3",
+    "bell": "^9.3.1",
+    "boom": "^7.2.0",
+    "cloudinary": "^1.13.2",
+    "crypto-js": "^3.1.9-1",
+    "globally": "^0.0.0",
+    "handlebars": "^4.0.12",
+    "hapi": "^17.6.0",
+    "hapi-auth-cookie": "^9.0.0",
+    "inert": "^5.1.0",
+    "joi": "^14.1.0",
+    "mongoose": "^5.3.1",
+    "pm2": "^3.2.2",
+    "razorpay": "^2.0.4",
+    "request": "^2.88.0",
+    "vision": "^5.4.0"
+  }
+}
