@@ -1,24 +1,24 @@
-'use strict'
+"use strict"
 
 const bellCredentials = {
-    google : {
-        clientId : '',
-        clientSecret : '',
-        password : ''
+    google: {
+        clientId: "",
+        clientSecret: "",
+        password: "",
     },
 
-    linkedin : {
-        clientId : '',
-        clientSecret : '',
-        password : ''
+    linkedin: {
+        clientId: "",
+        clientSecret: "",
+        password: "",
     },
 }
 
 const hapiAuthCookieCredentials = {
-    password: '',
+    password: "",
 }
 
 module.exports = {
     bellCredentials,
-    hapiAuthCookieCredentials
+    hapiAuthCookieCredentials,
 }

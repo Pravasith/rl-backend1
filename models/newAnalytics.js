@@ -1,52 +1,54 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
-const GetISTTime = require('../factories/getISTTime')
+const GetISTTime = require("../factories/getISTTime")
 
 // Create product schema and Model
 const NewSubCategoryAnalyticsSchema = new Schema({
-
     isSubCat: {
         type: Boolean,
-        default : true
+        default: true,
     },
 
     fetchId: {
         type: String,
-        default: null
+        default: null,
     },
 
     subCategoryName: {
         type: String,
-        default: null
+        default: null,
     },
 
     categoryName: {
         type: String,
-        default: null
+        default: null,
     },
 
     productTypeName: {
         type: String,
-        default: null
+        default: null,
     },
 
     viewCount: {
         type: Number,
-        default: 1
+        default: 1,
     },
 
-    datesViewed : {
+    datesViewed: {
         type: Array,
-        default : []
+        default: [],
     },
 
     time: {
-        type : Date,
-        default: GetISTTime()
+        type: Date,
+        default: GetISTTime(),
     },
 })
 
-const NewSubCategoryAnalytics = mongoose.model('sub-category-analytics', NewSubCategoryAnalyticsSchema)
+const NewSubCategoryAnalytics = mongoose.model(
+    "sub-category-analytics",
+    NewSubCategoryAnalyticsSchema
+)
 
 module.exports = NewSubCategoryAnalytics

@@ -1,13 +1,13 @@
-'use strict'
+"use strict"
 
 const twoFactorCredentials = {
-    apiKey : "",
-    linkToSend : ""
+    apiKey: "",
+    linkToSend: "",
 }
 
-const otpSecret = ''
+const otpSecret = ""
 
 module.exports = {
     twoFactorCredentials,
-    otpSecret
+    otpSecret,
 }

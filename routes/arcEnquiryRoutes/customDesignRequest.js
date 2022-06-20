@@ -1,14 +1,14 @@
-'use strict'
+"use strict"
 
 // External dependencies
-const Joi = require('joi')
+const Joi = require("joi")
 
 // Internal dependencies
-const CustomDesignRequest = require('../../models/submitDesignRequest')
+const CustomDesignRequest = require("../../models/submitDesignRequest")
 
-const DataEncrypterAndDecrypter = require('../../factories/encryptDecrypt')
+const DataEncrypterAndDecrypter = require("../../factories/encryptDecrypt")
 
-const corsHeaders = require('../../lib/routeHeaders')
+const corsHeaders = require("../../lib/routeHeaders")
 
 let newCustomDesignRequest = {
     method: "POST",
@@ -16,17 +16,17 @@ let newCustomDesignRequest = {
 
     config: {
         cors: corsHeaders,
-        tags: ['api'],
+        tags: ["api"],
         auth: {
-            strategy: 'restricted',
-            mode: 'try'
+            strategy: "restricted",
+            mode: "try",
         },
         validate: {
             payload: {
                 requestData: Joi.string(),
                 message: Joi.string(),
-            }
-        }
+            },
+        },
     },
     handler: async (request, h) => {
         let { requestData, message } = request.payload
@@ -46,16 +46,18 @@ let newCustomDesignRequest = {
             name: Joi.string().max(100).required(),
             emailId: Joi.string().email({ minDomainAtoms: 2 }).required(),
             mobileNo: Joi.number().integer().max(9999999999).required(),
-            referenceImages: Joi.array().items(
-                Joi.object().keys({
-                    imageCode: Joi.string().max(500).required(),
-                    imageURL: Joi.string().max(9000).required()
-                })
-            ).required()
+            referenceImages: Joi.array()
+                .items(
+                    Joi.object().keys({
+                        imageCode: Joi.string().max(500).required(),
+                        imageURL: Joi.string().max(9000).required(),
+                    })
+                )
+                .required(),
         })
 
         await Joi.validate(decryptedData, schema)
-            .then((val) => {
+            .then(val => {
                 dataPassesValidation = true
             })
             .catch(e => {
@@ -66,64 +68,54 @@ let newCustomDesignRequest = {
         /////// VALIDATE PAYLOAD //////////////////////////////////////
         let dataToSendBack
         if (dataPassesValidation === true) {
-
             let { name, emailId, mobileNo, referenceImages } = decryptedData
 
-            await CustomDesignRequest.create(
-                {
-                    name,
-                    emailId,
-                    mobileNo,
-                    referenceImages: referenceImages ? referenceImages : []
-                }
-            )
+            await CustomDesignRequest.create({
+                name,
+                emailId,
+                mobileNo,
+                referenceImages: referenceImages ? referenceImages : [],
+            })
                 .then(res => {
                     dataToSendBack = res
                 })
 
-                .catch((err) => {
+                .catch(err => {
                     console.log(err)
                     return h.response(err)
                 })
 
-
-
-            // 
+            //
             // Encrypt data
-            // 
+            //
             dataToSendBack = {
-                responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                message: "Submit custom design response recorded successfully"
+                responseData:
+                    DataEncrypterAndDecrypter.encryptData(dataToSendBack),
+                message: "Submit custom design response recorded successfully",
             }
-            // 
+            //
             // Encrypt data
-            // 
-
-
-
-        }
-
-        else {
-
+            //
+        } else {
             dataToSendBack = {
-                message: "Wrong data"
+                message: "Wrong data",
             }
 
-
-            // 
+            //
             // Encrypt data
-            // 
+            //
             dataToSendBack = {
-                responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1"
+                responseData:
+                    DataEncrypterAndDecrypter.encryptData(dataToSendBack),
+                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1",
             }
-            // 
+            //
             // Encrypt data
-            // 
+            //
         }
 
         return h.response(dataToSendBack)
-    }
+    },
 }
 
 let customDesignDetails = {
@@ -132,43 +124,40 @@ let customDesignDetails = {
 
     config: {
         cors: corsHeaders,
-        tags: ['admin'],
+        tags: ["admin"],
         auth: {
-            strategy: 'restricted',
-        }
+            strategy: "restricted",
+        },
     },
 
     handler: async (request, h) => {
-        let dataToSendBack, responseData;
+        let dataToSendBack, responseData
 
         await CustomDesignRequest.find({})
-        .then(res => {
-            responseData = res;
-        })
-        .catch(err => console.log(err))
+            .then(res => {
+                responseData = res
+            })
+            .catch(err => console.log(err))
 
         dataToSendBack = {
-            customDesignRequests : responseData
+            customDesignRequests: responseData,
         }
 
-        // 
+        //
         // Encrypt data
-        // 
+        //
         dataToSendBack = {
             responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-            message: "Sending all custom design requests data"
+            message: "Sending all custom design requests data",
         }
-        // 
+        //
         // Encrypt data
-        // 
+        //
 
-        return dataToSendBack;
-    }
+        return dataToSendBack
+    },
 }
 
-let CustomDesignRoute = [
-    customDesignDetails,
-    newCustomDesignRequest
-]
+let CustomDesignRoute = [customDesignDetails, newCustomDesignRequest]
 
 module.exports = CustomDesignRoute

@@ -1,67 +1,66 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
-const GetISTTime = require('../factories/getISTTime')
+const GetISTTime = require("../factories/getISTTime")
 
 // Create user Schema and Model
 const NewVendorSchema = new Schema({
-
     rLId: {
         type: String,
-        required: [true, "The computer couldn't process the rLId."]
+        required: [true, "The computer couldn't process the rLId."],
     },
 
-    lifeCycleStage : {
+    lifeCycleStage: {
         // 1 = first time user
         // 2 = login details filled
         type: Number,
-        default: 1 
+        default: 1,
     },
 
     companyName: {
         type: String,
-        default: null
+        default: null,
     },
 
     products: {
         type: Array,
-        default: []
+        default: [],
     },
 
     address: {
         hNo: {
             type: String,
-            default: null
+            default: null,
         },
 
         stNo: {
             type: String,
-            default: null
+            default: null,
         },
 
         detailedAddressLine1: {
             type: String,
-            default: null
+            default: null,
         },
 
         detailedAddressLine2: {
             type: String,
-            default: null
+            default: null,
         },
 
         state: {
             type: String,
-            default: null
+            default: null,
         },
 
         city: {
             type: String,
-            default: null
+            default: null,
         },
 
         pincode: {
             type: Number,
-            default: 000000
+            default: 000000,
         },
     },
 
@@ -70,45 +69,44 @@ const NewVendorSchema = new Schema({
         default: null,
     },
 
-    companyDescriptionLine2 : {
+    companyDescriptionLine2: {
         type: String,
-        default: null
+        default: null,
     },
 
     experience: {
         years: {
             type: String,
-            default: null
+            default: null,
         },
 
         months: {
             type: String,
-            default: null
-        }
+            default: null,
+        },
     },
 
     GSTIN: {
         type: String,
-        default: null
+        default: null,
     },
 
     PAN: {
         type: String,
-        default: null
+        default: null,
     },
 
     companyProfilePicture: {
         type: String,
-        default : null
+        default: null,
     },
-    
+
     time: {
-        type : Date,
-        default: GetISTTime()
+        type: Date,
+        default: GetISTTime(),
     },
 })
 
-const NewVendor = mongoose.model('vendor', NewVendorSchema)
+const NewVendor = mongoose.model("vendor", NewVendorSchema)
 
 module.exports = NewVendor
-

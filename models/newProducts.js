@@ -1,17 +1,16 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 // Create product schema and Model
 const NewProductSchema = new Schema({
-
     rLId: {
         type: String,
-        required: [true, "The computer couldn't process the rLId."]
+        required: [true, "The computer couldn't process the rLId."],
     },
 
     productId: {
         type: String,
-        required: [true, "The computer couldn't process the product id."]
+        required: [true, "The computer couldn't process the product id."],
     },
 
     productName: {
@@ -36,10 +35,10 @@ const NewProductSchema = new Schema({
 
     priceNotation: {
         type: Number,
-        default: null
+        default: null,
     },
 
-    gstPercentage : {
+    gstPercentage: {
         type: Number,
         default: 0,
     },
@@ -51,17 +50,17 @@ const NewProductSchema = new Schema({
 
     finishingOptions: {
         type: Array,
-        default: []
+        default: [],
     },
 
     colorOptions: {
         type: Array,
-        default: []
+        default: [],
     },
 
     sizesAvailable: {
         type: Array,
-        default: []
+        default: [],
     },
 
     minQuantity: {
@@ -76,22 +75,22 @@ const NewProductSchema = new Schema({
 
     productDescription: {
         type: String,
-        default: null
+        default: null,
     },
 
     features: {
         type: Array,
-        default: []
+        default: [],
     },
 
     designStyles: {
         type: Array,
-        default: []
+        default: [],
     },
 
     tags: {
         type: Array,
-        default: []
+        default: [],
     },
 
     availability: {
@@ -111,65 +110,65 @@ const NewProductSchema = new Schema({
 
     productThumbImage: {
         type: String,
-        default: null
+        default: null,
     },
 
-    productImages : {
+    productImages: {
         type: Array,
-        default: []
+        default: [],
     },
 
-    brandName : {
+    brandName: {
         type: String,
-        default: null
+        default: null,
     },
 
     brandImage: {
         type: String,
-        default: null
+        default: null,
     },
 
-    youTubeAdVideos : {
+    youTubeAdVideos: {
         type: Array,
-        default: []
+        default: [],
     },
 
     productInstallers: {
         type: Array,
-        default: []
+        default: [],
     },
 
     productInstallationAvailability: {
-        type : Number,
-        default : null
+        type: Number,
+        default: null,
     },
 
     productInstallationServiceCost: {
-        type : Number,
-        default : null
-    },
-    
-    installationServiceCostType: {
-        type : Number,
-        default : null
-    },
-
-    viewedPeople : {
-        type : Array,
-        default : []
-    },
-
-    viewsOverall : {
         type: Number,
-        default : 0
+        default: null,
+    },
+
+    installationServiceCostType: {
+        type: Number,
+        default: null,
+    },
+
+    viewedPeople: {
+        type: Array,
+        default: [],
+    },
+
+    viewsOverall: {
+        type: Number,
+        default: 0,
     },
 
     time: {
-        type : Date,
-        default: Date.now
+        type: Date,
+        default: Date.now,
     },
 })
 
-const NewProduct = mongoose.model('product', NewProductSchema)
+const NewProduct = mongoose.model("product", NewProductSchema)
 
 module.exports = NewProduct

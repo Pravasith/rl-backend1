@@ -1,8 +1,8 @@
-const Razorpay = require('razorpay');
+const Razorpay = require("razorpay")
 
 var instance = new Razorpay({
-    key_id: '',
-    key_secret: ''
-  })
+    key_id: "",
+    key_secret: "",
+})
 
-module.exports = instance;
+module.exports = instance

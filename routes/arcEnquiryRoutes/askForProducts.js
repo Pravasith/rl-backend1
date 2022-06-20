@@ -1,14 +1,14 @@
-'use strict'
+"use strict"
 
 // External dependencies
-const Joi = require('joi')
+const Joi = require("joi")
 
 // Internal dependencies
-const AskForProducts = require('../../models/newProductRequest')
+const AskForProducts = require("../../models/newProductRequest")
 
-const DataEncrypterAndDecrypter = require('../../factories/encryptDecrypt')
+const DataEncrypterAndDecrypter = require("../../factories/encryptDecrypt")
 
-const corsHeaders = require('../../lib/routeHeaders')
+const corsHeaders = require("../../lib/routeHeaders")
 
 //// START Routes
 
@@ -18,17 +18,17 @@ let newAskForProducts = {
 
     config: {
         cors: corsHeaders,
-        tags: ['api'],
+        tags: ["api"],
         auth: {
-            strategy: 'restricted',
-            mode: 'try'
+            strategy: "restricted",
+            mode: "try",
         },
         validate: {
             payload: {
                 requestData: Joi.string(),
                 message: Joi.string(),
-            }
-        }
+            },
+        },
     },
     handler: async (request, h) => {
         let { requestData, message } = request.payload
@@ -51,13 +51,13 @@ let newAskForProducts = {
             referenceImages: Joi.array().items(
                 Joi.object().keys({
                     imageCode: Joi.string().max(500).required(),
-                    imageURL: Joi.string().max(9000).required()
+                    imageURL: Joi.string().max(9000).required(),
                 })
-            )
+            ),
         })
 
         await Joi.validate(decryptedData, schema)
-            .then((val) => {
+            .then(val => {
                 dataPassesValidation = true
             })
             .catch(e => {
@@ -68,70 +68,58 @@ let newAskForProducts = {
         /////// VALIDATE PAYLOAD //////////////////////////////////////
         let dataToSendBack
         if (dataPassesValidation === true) {
-
             let { name, productName, mobileNo, referenceImages } = decryptedData
 
-            await AskForProducts.create(
-                {
-                    name,
-                    productName,
-                    mobileNo,
-                    referenceImages: referenceImages ? referenceImages : []
-                }
-            )
+            await AskForProducts.create({
+                name,
+                productName,
+                mobileNo,
+                referenceImages: referenceImages ? referenceImages : [],
+            })
                 .then(res => {
                     dataToSendBack = res
                 })
 
-                .catch((err) => {
+                .catch(err => {
                     console.log(err)
                     return h.response(err)
                 })
 
-
-
-            // 
+            //
             // Encrypt data
-            // 
+            //
             dataToSendBack = {
-                responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                message: "Ask for product response recorded successfully"
+                responseData:
+                    DataEncrypterAndDecrypter.encryptData(dataToSendBack),
+                message: "Ask for product response recorded successfully",
             }
-            // 
+            //
             // Encrypt data
-            // 
-
-
-
-        }
-
-        else {
-
+            //
+        } else {
             dataToSendBack = {
-                message: "Wrong data"
+                message: "Wrong data",
             }
 
-
-            // 
+            //
             // Encrypt data
-            // 
+            //
             dataToSendBack = {
-                responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1"
+                responseData:
+                    DataEncrypterAndDecrypter.encryptData(dataToSendBack),
+                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1",
             }
-            // 
+            //
             // Encrypt data
-            // 
+            //
         }
 
         return h.response(dataToSendBack)
-    }
+    },
 }
 
 /// END Routes
 
-let AskForProductsRoute = [
-    newAskForProducts
-]
+let AskForProductsRoute = [newAskForProducts]
 
 module.exports = AskForProductsRoute

@@ -1,13 +1,13 @@
-'use strict'
+"use strict"
 
 // External dependencies
-const Joi = require('joi');
+const Joi = require("joi")
 
-const request = require('request');
+const request = require("request")
 
-const DataEncrypterAndDecrypter = require('../../factories/encryptDecrypt');
+const DataEncrypterAndDecrypter = require("../../factories/encryptDecrypt")
 
-const corsHeaders = require('../../lib/routeHeaders');
+const corsHeaders = require("../../lib/routeHeaders")
 
 // const instance = require('../../config/paymentConfig');
 
@@ -18,26 +18,24 @@ let verifyPayment = {
     config: {
         cors: corsHeaders,
         auth: {
-            strategy: 'restricted',
+            strategy: "restricted",
         },
-        tags: ['api'],
+        tags: ["api"],
         validate: {
             payload: {
                 requestData: Joi.string(),
                 message: Joi.string(),
-            }
-        }
+            },
+        },
     },
 
     handler: async (req, h) => {
-        let { requestData, message } = req.payload;
-        
+        let { requestData, message } = req.payload
+
         //
         // DECRYPT REQUEST DATA
-        // 
-        let decryptedData = DataEncrypterAndDecrypter.decryptData(
-            requestData
-        )
+        //
+        let decryptedData = DataEncrypterAndDecrypter.decryptData(requestData)
         //
         // DECRYPT REQUEST DATA
         //
@@ -49,26 +47,26 @@ let verifyPayment = {
             doorNumber: Joi.string().required(),
             landmark: Joi.string().required(),
             completeAddress: Joi.string().required(),
-            mobileNumber: Joi.number().max(10).required()
+            mobileNumber: Joi.number().max(10).required(),
         })
 
         await Joi.validate(decryptedData, schema)
-        .then((val) => {
-            dataPassesValidation = true
-        })
-        .catch(e => {
-            console.error(e)
-            return h.response(e)
-        })
+            .then(val => {
+                dataPassesValidation = true
+            })
+            .catch(e => {
+                console.error(e)
+                return h.response(e)
+            })
         /////// VALIDATE PAYLOAD //////////////////////////////////////
 
-        if(dataPassesValidation === true) {
+        if (dataPassesValidation === true) {
         }
 
         return "abcd"
-    }
+    },
 }
 
 let SavedAddressRouter = [verifyPayment]
 
-module.exports = SavedAddressRouter;
+module.exports = SavedAddressRouter

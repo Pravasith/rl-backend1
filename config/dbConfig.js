@@ -1,9 +1,9 @@
-'use strict'
+"use strict"
 
 const mongodbCredentials = {
-    "connectUrl" : 'mongodb://'
+    connectUrl: "mongodb://",
 }
 
 module.exports = {
-    mongodbCredentials: mongodbCredentials
+    mongodbCredentials: mongodbCredentials,
 }

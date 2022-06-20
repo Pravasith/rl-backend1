@@ -1,48 +1,46 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link rel="stylesheet" type="text/css" media="screen" href="" /> -->
-    <style>
-        body{
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        h2{
-            font-size: 1.5em;
-            text-align: start;
-            font-family: arial;
-            font-weight: 700;
-            color: #ff6078;
-        }
-        h3{
-            font-size: 1.5em;
-            text-align: start;
-            font-family: arial;
-            font-weight: 700;
-            color: rgb(58, 58, 58);
-            margin: 0em;
-        }
-    </style>
-    
-</head>
-<body>
-    
-    <h3>We are loading the page...</h3>
-    
-    <script>
-    function myFunction() {
-        // window.open("http://rollinglogs.com" + "/student/login","_self");
-        // window.open("http://rolling-logs-new.s3-website-us-east-1.amazonaws.com" + "/student/login","_self");
-        // window.open("http://localhost:3000" + "/student/login","_self");
-        window.open("{{url}}" + "/","_self");
-    }
-    myFunction()
-    </script>
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Page Title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- <link rel="stylesheet" type="text/css" media="screen" href="" /> -->
+        <style>
+            body{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            h2{
+                font-size: 1.5em;
+                text-align: start;
+                font-family: arial;
+                font-weight: 700;
+                color: #ff6078;
+            }
+            h3{
+                font-size: 1.5em;
+                text-align: start;
+                font-family: arial;
+                font-weight: 700;
+                color: rgb(58, 58, 58);
+                margin: 0em;
+            }
+        </style>
+    </head>
+    <body>
+        <h3>We are loading the page...</h3>
+
+        <script>
+            function myFunction() {
+                // window.open("http://rollinglogs.com" + "/student/login","_self");
+                // window.open("http://rolling-logs-new.s3-website-us-east-1.amazonaws.com" + "/student/login","_self");
+                // window.open("http://localhost:3000" + "/student/login","_self");
+                window.open("{{url}}" + "/", "_self")
+            }
+            myFunction()
+        </script>
+    </body>
 </html>

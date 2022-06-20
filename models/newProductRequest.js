@@ -1,36 +1,35 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
-const GetISTTime = require('../factories/getISTTime')
+const GetISTTime = require("../factories/getISTTime")
 // Create product schema and Model
 const AskForProductsSchema = new Schema({
-
     name: {
         type: String,
-        default: null
+        default: null,
     },
 
     productName: {
         type: String,
-        default: null
+        default: null,
     },
 
     mobileNo: {
         type: Number,
-        default: null
+        default: null,
     },
 
     referenceImages: {
-        type : Array,
-        default: []
+        type: Array,
+        default: [],
     },
 
     time: {
-        type : Date,
-        default: GetISTTime()
+        type: Date,
+        default: GetISTTime(),
     },
 })
 
-const AskForProducts = mongoose.model('ask-for-product', AskForProductsSchema)
+const AskForProducts = mongoose.model("ask-for-product", AskForProductsSchema)
 
 module.exports = AskForProducts

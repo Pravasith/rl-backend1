@@ -1,23 +1,15 @@
-'use strict'
+"use strict"
 
 // External dependencies
-const Joi = require('joi')
-const DataEncrypterAndDecrypter = require('../../factories/encryptDecrypt')
+const Joi = require("joi")
+const DataEncrypterAndDecrypter = require("../../factories/encryptDecrypt")
 
+const NewCategory = require("../../models/newCategories")
+const NewProduct = require("../../models/newProducts")
+const CategoryNames = require("../../lib/categoryNames")
+const NewCount = require("../../models/newCount")
 
-const NewCategory = require('../../models/newCategories')
-const NewProduct = require('../../models/newProducts')
-const CategoryNames = require('../../lib/categoryNames')
-const NewCount = require('../../models/newCount')
-
-
-const corsHeaders = require('../../lib/routeHeaders')
-
-
-
-
-
-
+const corsHeaders = require("../../lib/routeHeaders")
 
 let getSubCategories = {
     method: "POST",
@@ -26,18 +18,17 @@ let getSubCategories = {
     config: {
         cors: corsHeaders,
         auth: {
-            strategy: 'restricted',
+            strategy: "restricted",
         },
-        tags: ['api'],
+        tags: ["api"],
         validate: {
             payload: {
                 requestData: Joi.string(),
                 message: Joi.string(),
-            }
-        }
+            },
+        },
     },
     handler: async (request, h) => {
-
         let { requestData, message } = request.payload
 
         //
@@ -48,88 +39,78 @@ let getSubCategories = {
         // DECRYPT REQUEST DATA
         //
 
-
         /////// VALIDATE PAYLOAD //////////////////////////////////////
         let dataPassesValidation = false
 
-
-
         const schema = Joi.object().keys({
-            categoryId : Joi.string().max(7).required(),
+            categoryId: Joi.string().max(7).required(),
         })
 
         await Joi.validate(decryptedData, schema)
-        .then((val) => {
-            dataPassesValidation = true
-        })
-        .catch(e => {
-            console.error(e)
-            return h.response(e)
-        })
+            .then(val => {
+                dataPassesValidation = true
+            })
+            .catch(e => {
+                console.error(e)
+                return h.response(e)
+            })
         /////// VALIDATE PAYLOAD //////////////////////////////////////
 
         const { rLId } = request.auth.credentials
 
         let dataToSendBack
 
-        if(dataPassesValidation === true){
+        if (dataPassesValidation === true) {
             let { categoryId } = decryptedData
 
             let categoryName = CategoryNames[categoryId]
 
-            await NewCategory[categoryName].find()
-            .then(res => {
-
+            await NewCategory[categoryName].find().then(res => {
                 let subCategoriesArray = []
 
                 res.map((item, i) => {
                     subCategoriesArray.push({
-                        subCategoryId : item.subCategoryId,
-                        subCategoryName : item.subCategoryName
+                        subCategoryId: item.subCategoryId,
+                        subCategoryName: item.subCategoryName,
                     })
                 })
-                    
+
                 dataToSendBack = {
-                    subCategoriesArray
+                    subCategoriesArray,
                 }
 
-                // 
+                //
                 // Encrypt data
-                // 
+                //
                 dataToSendBack = {
-                    responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                    message: "All units, dispatching sub-categories. Over."
+                    responseData:
+                        DataEncrypterAndDecrypter.encryptData(dataToSendBack),
+                    message: "All units, dispatching sub-categories. Over.",
                 }
-                // 
+                //
                 // Encrypt data
-                // 
-
+                //
             })
-        }
-
-        else{
-
+        } else {
             dataToSendBack = {
-                message : "Wrong data"
+                message: "Wrong data",
             }
 
-
-            // 
+            //
             // Encrypt data
-            // 
+            //
             dataToSendBack = {
-                responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1"
+                responseData:
+                    DataEncrypterAndDecrypter.encryptData(dataToSendBack),
+                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1",
             }
-            // 
+            //
             // Encrypt data
-            // 
+            //
         }
         return h.response(dataToSendBack)
-    }
+    },
 }
-
-
 
 let getProductTypes = {
     method: "POST",
@@ -138,18 +119,17 @@ let getProductTypes = {
     config: {
         cors: corsHeaders,
         auth: {
-            strategy: 'restricted',
+            strategy: "restricted",
         },
-        tags: ['api'],
+        tags: ["api"],
         validate: {
             payload: {
                 requestData: Joi.string(),
                 message: Joi.string(),
-            }
-        }
+            },
+        },
     },
     handler: async (request, h) => {
-
         let { requestData, message } = request.payload
 
         //
@@ -162,31 +142,30 @@ let getProductTypes = {
 
         // console.log(decryptedData)
 
-
         /////// VALIDATE PAYLOAD //////////////////////////////////////
         let dataPassesValidation = false
 
-
-
         const schema = Joi.object().keys({
-            sCId : Joi.string().max(7 + 1 + 7).required(),
+            sCId: Joi.string()
+                .max(7 + 1 + 7)
+                .required(),
         })
 
         await Joi.validate(decryptedData, schema)
-        .then((val) => {
-            dataPassesValidation = true
-        })
-        .catch(e => {
-            console.error(e)
-            return h.response(e)
-        })
+            .then(val => {
+                dataPassesValidation = true
+            })
+            .catch(e => {
+                console.error(e)
+                return h.response(e)
+            })
         /////// VALIDATE PAYLOAD //////////////////////////////////////
 
         const { rLId } = request.auth.credentials
 
         let dataToSendBack
 
-        if(dataPassesValidation === true){
+        if (dataPassesValidation === true) {
             let { sCId } = decryptedData
 
             const getCategoryId = () => {
@@ -200,65 +179,54 @@ let getProductTypes = {
 
             sCId = sCId.toUpperCase()
 
-            await NewCategory[categoryName].findOne(
-                {
-                    subCategoryId : sCId
-                },
-                
-            )
-            .then(res => {
-
-                if(res){
-                    dataToSendBack = {
-                        productTypes: res.productTypes
+            await NewCategory[categoryName]
+                .findOne({
+                    subCategoryId: sCId,
+                })
+                .then(res => {
+                    if (res) {
+                        dataToSendBack = {
+                            productTypes: res.productTypes,
+                        }
+                    } else {
+                        dataToSendBack = {}
                     }
-                }
 
-                else{
-                    dataToSendBack = {}
-                }
-                
-
-                // 
-                // Encrypt data
-                // 
-                dataToSendBack = {
-                    responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                    message: "Roger, chief, dispatching product types. Over."
-                }
-                // 
-                // Encrypt data
-                // 
-
-            })
-        }
-
-        else{
-
+                    //
+                    // Encrypt data
+                    //
+                    dataToSendBack = {
+                        responseData:
+                            DataEncrypterAndDecrypter.encryptData(
+                                dataToSendBack
+                            ),
+                        message:
+                            "Roger, chief, dispatching product types. Over.",
+                    }
+                    //
+                    // Encrypt data
+                    //
+                })
+        } else {
             dataToSendBack = {
-                message : "Wrong data"
+                message: "Wrong data",
             }
 
-
-            // 
+            //
             // Encrypt data
-            // 
+            //
             dataToSendBack = {
-                responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1"
+                responseData:
+                    DataEncrypterAndDecrypter.encryptData(dataToSendBack),
+                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1",
             }
-            // 
+            //
             // Encrypt data
-            // 
+            //
         }
         return h.response(dataToSendBack)
-    }
+    },
 }
-
-
-
-
-
 
 let getProductHierarchy = {
     method: "POST",
@@ -267,19 +235,18 @@ let getProductHierarchy = {
     config: {
         cors: corsHeaders,
         auth: {
-            strategy: 'restricted',
-            mode: 'try'
+            strategy: "restricted",
+            mode: "try",
         },
-        tags: ['api'],
+        tags: ["api"],
         validate: {
             payload: {
                 requestData: Joi.string(),
                 message: Joi.string(),
-            }
-        }
+            },
+        },
     },
     handler: async (request, h) => {
-
         let { requestData, message } = request.payload
 
         //
@@ -292,31 +259,28 @@ let getProductHierarchy = {
 
         // console.log(decryptedData)
 
-
         /////// VALIDATE PAYLOAD //////////////////////////////////////
         let dataPassesValidation = false
 
-
-
         const schema = Joi.object().keys({
-            pId : Joi.string().max(32).required(),
+            pId: Joi.string().max(32).required(),
         })
 
         await Joi.validate(decryptedData, schema)
-        .then((val) => {
-            dataPassesValidation = true
-        })
-        .catch(e => {
-            console.error(e)
-            return h.response(e)
-        })
+            .then(val => {
+                dataPassesValidation = true
+            })
+            .catch(e => {
+                console.error(e)
+                return h.response(e)
+            })
         /////// VALIDATE PAYLOAD //////////////////////////////////////
 
         const { rLId } = request.auth.credentials
 
         let dataToSendBack
 
-        if(dataPassesValidation === true){
+        if (dataPassesValidation === true) {
             let { pId } = decryptedData
 
             const getCategoryId = () => {
@@ -330,92 +294,77 @@ let getProductHierarchy = {
 
             pId = pId.toUpperCase()
 
-            let sCId =  pId.split("-")[0] + "-" + 
-                        pId.split("-")[1]
+            let sCId = pId.split("-")[0] + "-" + pId.split("-")[1]
 
-            await NewCategory[categoryName].findOne(
-                {
-                    subCategoryId : sCId
-                },
-                
-            )
-            .then(res => {
+            await NewCategory[categoryName]
+                .findOne({
+                    subCategoryId: sCId,
+                })
+                .then(res => {
+                    if (res) {
+                        let pTypes = res.productTypes
+                        let subCategoryName = res.subCategoryName
 
-                if(res){
+                        pTypes.map((item, i) => {
+                            let pTypeId =
+                                pId.split("-")[0] +
+                                "-" +
+                                pId.split("-")[1] +
+                                "-" +
+                                pId.split("-")[2]
 
-                    let pTypes = res.productTypes
-                    let subCategoryName = res.subCategoryName
-
-                    pTypes.map((item, i) => {
-
-                        let pTypeId = pId.split("-")[0] + "-" + 
-                                        pId.split("-")[1] + "-" + 
-                                        pId.split("-")[2]
-
-
-                        if(pTypeId === item.productTypeId){
-                            dataToSendBack = {
-                                productTypeName : item.productType,
-                                categoryName,
-                                subCategoryName
+                            if (pTypeId === item.productTypeId) {
+                                dataToSendBack = {
+                                    productTypeName: item.productType,
+                                    categoryName,
+                                    subCategoryName,
+                                }
                             }
-                        }
-                    })
+                        })
 
-                    // dataToSendBack = {
-                    //     ...dataToSendBack[0]
-                    // }
-                }
+                        // dataToSendBack = {
+                        //     ...dataToSendBack[0]
+                        // }
+                    } else {
+                        dataToSendBack = {}
+                    }
 
-                else{
-                    dataToSendBack = {}
-                }
-                
-
-                // 
-                // Encrypt data
-                // 
-                dataToSendBack = {
-                    responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                    message: "Roger, chief, dispatching product types. Over."
-                }
-                // 
-                // Encrypt data
-                // 
-
-            })
-        }
-
-        else{
-
+                    //
+                    // Encrypt data
+                    //
+                    dataToSendBack = {
+                        responseData:
+                            DataEncrypterAndDecrypter.encryptData(
+                                dataToSendBack
+                            ),
+                        message:
+                            "Roger, chief, dispatching product types. Over.",
+                    }
+                    //
+                    // Encrypt data
+                    //
+                })
+        } else {
             dataToSendBack = {
-                message : "Wrong data"
+                message: "Wrong data",
             }
 
-
-            // 
+            //
             // Encrypt data
-            // 
+            //
             dataToSendBack = {
-                responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1"
+                responseData:
+                    DataEncrypterAndDecrypter.encryptData(dataToSendBack),
+                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1",
             }
-            // 
+            //
             // Encrypt data
-            // 
+            //
         }
         return h.response(dataToSendBack)
-    }
+    },
 }
 
-
-
-
-
-let CategoryRoute = [
-    getSubCategories,
-    getProductTypes,
-    getProductHierarchy
-]
+let CategoryRoute = [getSubCategories, getProductTypes, getProductHierarchy]
 
 module.exports = CategoryRoute

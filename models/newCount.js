@@ -1,9 +1,8 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 // Create product schema and Model
 const NewCountSchema = new Schema({
-
     categoryCount: {
         type: Number,
         default: 0,
@@ -23,9 +22,8 @@ const NewCountSchema = new Schema({
         type: Number,
         default: 0,
     },
-
 })
 
-const NewCount = mongoose.model('count-number', NewCountSchema)
+const NewCount = mongoose.model("count-number", NewCountSchema)
 
 module.exports = NewCount

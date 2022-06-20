@@ -1,46 +1,45 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 const Schema = mongoose.Schema
-const GetISTTime = require('../factories/getISTTime')
+const GetISTTime = require("../factories/getISTTime")
 
 // Create product schema and Model
 const NewAdminSchema = new Schema({
-
     adminName: {
         type: String,
-        default: null
+        default: null,
     },
 
     adminPassword: {
         type: String,
-        default: null
+        default: null,
     },
 
     adminId: {
         type: String,
-        default: null
+        default: null,
     },
-    
+
     adminEmail: {
         type: String,
-        default: null
+        default: null,
     },
-    
+
     adminAlternateEmail: {
         type: String,
-        default: null
+        default: null,
     },
-    
+
     adminMobile: {
         type: Number,
-        default: null
+        default: null,
     },
 
     time: {
-        type : Date,
-        default: Date.now
+        type: Date,
+        default: Date.now,
     },
 })
 
-const NewAdmin = mongoose.model('admin-database', NewAdminSchema)
+const NewAdmin = mongoose.model("admin-database", NewAdminSchema)
 
 module.exports = NewAdmin

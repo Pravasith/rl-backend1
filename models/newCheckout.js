@@ -1,32 +1,31 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 // Create product schema and Model
 const NewCheckoutSchema = new Schema({
-
     rLId: {
         type: String,
-        required: [true, "The computer couldn't process the rLId."]
-    }, 
-    
+        required: [true, "The computer couldn't process the rLId."],
+    },
+
     emailId: {
         type: String,
-        required: [true, "The computer couldn't process the emailId."]
+        required: [true, "The computer couldn't process the emailId."],
     },
 
     firstName: {
         type: String,
-        required: true
+        required: true,
     },
 
     lastName: {
         type: String,
-        default: null
+        default: null,
     },
 
     mobileNo: {
         type: Number,
-        default: null
+        default: null,
     },
 
     addresses: {
@@ -36,15 +35,15 @@ const NewCheckoutSchema = new Schema({
 
     cartData: {
         type: Array,
-        default: []
+        default: [],
     },
 
     time: {
-        type : Date,
-        default: Date.now
+        type: Date,
+        default: Date.now,
     },
 })
 
-const NewCheckout = mongoose.model('product', NewCheckoutSchema)
+const NewCheckout = mongoose.model("product", NewCheckoutSchema)
 
 module.exports = NewCheckout

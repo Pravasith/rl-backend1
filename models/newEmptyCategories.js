@@ -1,26 +1,27 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 const Schema = mongoose.Schema
-
 
 // Create product schema and Model
 const NewEmptyCategoriesSchema = new Schema({
-
     allCategories: {
         type: Array,
-        default: []
+        default: [],
     },
 
     categoryWholeData: {
         type: String,
-        default: "all-cats-sCats-pTypes-incl-pCount"
+        default: "all-cats-sCats-pTypes-incl-pCount",
     },
 
     time: {
-        type : Date,
-        default: Date.now
+        type: Date,
+        default: Date.now,
     },
 })
 
-const NewEmptyCategories = mongoose.model('empty-categorie', NewEmptyCategoriesSchema)
+const NewEmptyCategories = mongoose.model(
+    "empty-categorie",
+    NewEmptyCategoriesSchema
+)
 
 module.exports = NewEmptyCategories

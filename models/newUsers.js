@@ -1,111 +1,110 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 const Schema = mongoose.Schema
-const GetISTTime = require('../factories/getISTTime')
+const GetISTTime = require("../factories/getISTTime")
 
 // Create user Schema and Model
 const NewUserSchema = new Schema({
-
     emailId: {
         type: String,
-        required: [true, "The computer couldn't process the emailId."]
+        required: [true, "The computer couldn't process the emailId."],
     },
 
     password: {
         type: String,
-        default: "1234"
+        default: "1234",
     },
 
     rLId: {
         type: String,
-        required: [true, "The computer couldn't process the rLId."]
+        required: [true, "The computer couldn't process the rLId."],
     },
 
     userType: {
         type: String,
-        default: null
+        default: null,
     },
 
     locationData: {
         type: String,
-        default: "0000"
+        default: "0000",
     },
 
     firstName: {
         type: String,
-        default: null
+        default: null,
     },
 
     lastName: {
         type: String,
-        default: null
+        default: null,
     },
 
     otpChances: {
         type: Number,
-        default: 5
+        default: 5,
     },
 
     isVerified: {
         type: Boolean,
-        default: false
+        default: false,
     },
 
     profilePicture: {
         type: String,
-        default: null
+        default: null,
     },
 
     googleId: {
         type: String,
-        default: null
+        default: null,
     },
 
     linkedinId: {
         type: String,
-        default: null
+        default: null,
     },
 
     googleProfileURL: {
         type: String,
-        default: null
+        default: null,
     },
 
     linkedinProfileURL: {
         type: String,
-        default: null
+        default: null,
     },
 
     professionalTitle: {
         type: String,
-        default: null
+        default: null,
     },
 
     arcCoins: {
         type: Number,
-        default: 2000
+        default: 2000,
     },
 
     mobileNo: {
         type: Number,
-        default: null
+        default: null,
     },
 
     whatsappNo: {
         type: Number,
-        default: null
+        default: null,
     },
 
     stateAndCountry: {
         type: String,
-        default: "India"
+        default: "India",
     },
 
     time: {
-        type : Date,
-        default: GetISTTime()
+        type: Date,
+        default: GetISTTime(),
     },
 })
 
-const NewUser = mongoose.model('rlusers', NewUserSchema)
+const NewUser = mongoose.model("rlusers", NewUserSchema)
 
 module.exports = NewUser

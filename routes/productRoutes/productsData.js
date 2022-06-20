@@ -1,39 +1,32 @@
-'use strict'
+"use strict"
 
 // External dependencies
-const Joi = require('joi')
-const Bcrypt = require('bcryptjs')
+const Joi = require("joi")
+const Bcrypt = require("bcryptjs")
 
-const NewCategory = require('../../models/newCategories')
-const NewEmptyCategories = require('../../models/newEmptyCategories')
-const NewProduct = require('../../models/newProducts')
-const CategoryCodes = require('../../lib/categoryCodes')
-const NewCount = require('../../models/newCount')
-const CategoryNames = require('../../lib/categoryNames')
-const NewVendor = require('../../models/newVendors')
+const NewCategory = require("../../models/newCategories")
+const NewEmptyCategories = require("../../models/newEmptyCategories")
+const NewProduct = require("../../models/newProducts")
+const CategoryCodes = require("../../lib/categoryCodes")
+const NewCount = require("../../models/newCount")
+const CategoryNames = require("../../lib/categoryNames")
+const NewVendor = require("../../models/newVendors")
 
-const DataEncrypterAndDecrypter = require('../../factories/encryptDecrypt')
+const DataEncrypterAndDecrypter = require("../../factories/encryptDecrypt")
 
-const corsHeaders = require('../../lib/routeHeaders')
+const corsHeaders = require("../../lib/routeHeaders")
 
-const unitsPlaceConverter = (theNumber) => {
+const unitsPlaceConverter = theNumber => {
     if (theNumber < 10) {
         return "000" + theNumber
-    }
-
-    else if (theNumber >= 10 && theNumber < 100) {
+    } else if (theNumber >= 10 && theNumber < 100) {
         return "00" + theNumber
-    }
-
-    else if (theNumber >= 100 && theNumber < 1000) {
+    } else if (theNumber >= 100 && theNumber < 1000) {
         return "0" + theNumber
-    }
-
-    else {
+    } else {
         return "" + theNumber
     }
 }
-
 
 // let xx = {
 //     method: "GET",
@@ -58,7 +51,6 @@ const unitsPlaceConverter = (theNumber) => {
 //         return "DONE"
 //     }
 // }
-
 
 // let addNewProduct = {
 //     method: "POST",
@@ -89,11 +81,8 @@ const unitsPlaceConverter = (theNumber) => {
 //         // DECRYPT REQUEST DATA
 //         //
 
-
 //         /////// VALIDATE PAYLOAD //////////////////////////////////////
 //         let dataPassesValidation = false
-
-
 
 //         const schema = Joi.object().keys({
 
@@ -223,8 +212,6 @@ const unitsPlaceConverter = (theNumber) => {
 //                 installationServiceCostType,
 //             } = decryptedData
 
-
-
 //             // // check if email exists
 //             // await NewProduct.findOne({
 //             //     product_lowerCased_name : productName.toLowerCase()
@@ -235,35 +222,35 @@ const unitsPlaceConverter = (theNumber) => {
 //             //         productAlreadyExists = true
 //             //         dataToSendBack = {
 //             //             // ...result._doc,
-//             //             // productFound: true 
+//             //             // productFound: true
 //             //             productAlreadyExists
 //             //         }
 
-//             //         // 
+//             //         //
 //             //         // Encrypt data
-//             //         // 
+//             //         //
 //             //         dataToSendBack = {
 //             //             responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
 //             //             message: "Product found"
 //             //         }
-//             //         // 
+//             //         //
 //             //         // Encrypt data
-//             //         // 
+//             //         //
 //             //     }
 
 //             //     else {
 //             //         dataToSendBack = { productFound: false }
 
-//             //         // 
+//             //         //
 //             //         // Encrypt data
-//             //         // 
+//             //         //
 //             //         dataToSendBack = {
 //             //             responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
 //             //             message: "Product not found"
 //             //         }
-//             //         // 
+//             //         //
 //             //         // Encrypt data
-//             //         // 
+//             //         //
 //             //     }
 //             // })
 //             // .catch(e => h.response(e))
@@ -289,8 +276,6 @@ const unitsPlaceConverter = (theNumber) => {
 //                     productCount = result.productCount
 //                 })
 //                 .catch(e => h.response(e))
-
-
 
 //                 // add product to db
 //                 await NewProduct.create(
@@ -332,16 +317,16 @@ const unitsPlaceConverter = (theNumber) => {
 
 //                     productId = productData.productId
 
-//                     // 
+//                     //
 //                     // Encrypt data
-//                     // 
+//                     //
 //                     dataToSendBack = {
 //                         responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
 //                         message: "Product created successfully"
 //                     }
-//                     // 
+//                     //
 //                     // Encrypt data
-//                     // 
+//                     //
 
 //                 })
 //                 .catch((err) => {
@@ -392,7 +377,6 @@ const unitsPlaceConverter = (theNumber) => {
 //                 const categoryId = getCategoryId()
 //                 const subCategoryId = getSubCategoryId()
 
-
 //                 let categoryName = CategoryNames[categoryId]
 //                 let productTypes = []
 //                 let subCategoryName
@@ -421,8 +405,6 @@ const unitsPlaceConverter = (theNumber) => {
 //                     return item
 //                 })
 
-
-
 //                 await NewCategory[categoryName].findOneAndUpdate(
 //                     {
 //                         subCategoryId
@@ -441,8 +423,6 @@ const unitsPlaceConverter = (theNumber) => {
 //                     console.error(e)
 //                     return h.response(e)
 //                 })
-
-
 
 //                 await NewVendor.findOneAndUpdate(
 //                     {
@@ -481,26 +461,21 @@ const unitsPlaceConverter = (theNumber) => {
 //                 message : "Wrong data"
 //             }
 
-
-//             // 
+//             //
 //             // Encrypt data
-//             // 
+//             //
 //             dataToSendBack = {
 //                 responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
 //                 message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1"
 //             }
-//             // 
+//             //
 //             // Encrypt data
-//             // 
+//             //
 //         }
-
 
 //         return h.response(dataToSendBack)
 //     }
 // }
-
-
-
 
 let addNewProduct = {
     method: "POST",
@@ -509,18 +484,17 @@ let addNewProduct = {
     config: {
         cors: corsHeaders,
         auth: {
-            strategy: 'restricted',
+            strategy: "restricted",
         },
-        tags: ['api'],
+        tags: ["api"],
         validate: {
             payload: {
                 requestData: Joi.string(),
                 message: Joi.string(),
-            }
-        }
+            },
+        },
     },
     handler: async (request, h) => {
-
         let { requestData, message } = request.payload
 
         //
@@ -531,77 +505,93 @@ let addNewProduct = {
         // DECRYPT REQUEST DATA
         //
 
-
         /////// VALIDATE PAYLOAD //////////////////////////////////////
         let dataPassesValidation = false
 
-
-
         const schema = Joi.object().keys({
-
             productName: Joi.string().max(60).required(), // verified frontend
             productCode: Joi.string().max(30).required(), // verified frontend
-            basePrice: Joi.number().integer().max(99999999).required().allow(null), // verified frontend
+            basePrice: Joi.number()
+                .integer()
+                .max(99999999)
+                .required()
+                .allow(null), // verified frontend
             priceNotation: Joi.number().max(30).required(),
             gstPercentage: Joi.number().max(100).required(),
-            productMaterials: Joi.array().items(
-                Joi.object().keys({
-                    materialCost: Joi.number().integer().max(99999999).required(), // verified frontend
-                    materialName: Joi.string().max(60).required(), // verified frontend
-                    materialGrade: Joi.string().max(30).allow(null, "") // verified frontend
-                })
-            ).required(), // verified frontend
-            finishingOptions: Joi.array().items(
-                Joi.object().keys({
-                    finishName: Joi.string().max(30).required(), // verified frontend
-                    finishCode: Joi.string().max(30).allow(null, ""), // verified frontend
-                    finishImage: Joi.string().required(), // verified frontend
-                    finishCost: Joi.number().max(99999999)  // verified frontend
-                })
-            ).required(), // verified frontend
-            colorOptions: Joi.array().items(
-                Joi.object().keys({
-                    colorName: Joi.string().max(30).required(), // verified frontend
-                    colorCode: Joi.string().max(7).required(), // verified frontend
-                    colorCost: Joi.number().max(99999999) // verified frontend
-                })
-            ).required(), // verified frontend
+            productMaterials: Joi.array()
+                .items(
+                    Joi.object().keys({
+                        materialCost: Joi.number()
+                            .integer()
+                            .max(99999999)
+                            .required(), // verified frontend
+                        materialName: Joi.string().max(60).required(), // verified frontend
+                        materialGrade: Joi.string().max(30).allow(null, ""), // verified frontend
+                    })
+                )
+                .required(), // verified frontend
+            finishingOptions: Joi.array()
+                .items(
+                    Joi.object().keys({
+                        finishName: Joi.string().max(30).required(), // verified frontend
+                        finishCode: Joi.string().max(30).allow(null, ""), // verified frontend
+                        finishImage: Joi.string().required(), // verified frontend
+                        finishCost: Joi.number().max(99999999), // verified frontend
+                    })
+                )
+                .required(), // verified frontend
+            colorOptions: Joi.array()
+                .items(
+                    Joi.object().keys({
+                        colorName: Joi.string().max(30).required(), // verified frontend
+                        colorCode: Joi.string().max(7).required(), // verified frontend
+                        colorCost: Joi.number().max(99999999), // verified frontend
+                    })
+                )
+                .required(), // verified frontend
             sizesAvailable: Joi.array().items(
                 Joi.object().keys({
                     sizeName: Joi.string().max(100), // verified frontend
-                    sizeCost: Joi.number().max(99999999) // verified frontend
+                    sizeCost: Joi.number().max(99999999), // verified frontend
                 })
             ), // verified frontend
             minQuantity: Joi.number().max(99999999).required(), // verified frontend
             maxQuantity: Joi.number().max(99999999).required(), // verified frontend
             productDescription: Joi.string().max(500).required(), // verified frontend
             features: Joi.array().items(
-                Joi.string().max(200).allow(null, ""), // verified frontend
+                Joi.string().max(200).allow(null, "") // verified frontend
             ),
-            designStyles: Joi.array().items(
-                Joi.object().keys({
-                    styleId: Joi.number(), // verified frontend
-                    styleName: Joi.string().max(30).required() // verified frontend
-                })
-            ).required(), // verified frontend
+            designStyles: Joi.array()
+                .items(
+                    Joi.object().keys({
+                        styleId: Joi.number(), // verified frontend
+                        styleName: Joi.string().max(30).required(), // verified frontend
+                    })
+                )
+                .required(), // verified frontend
             productTypeId: Joi.string().max(21).required(), // verified frontend
-            tags: Joi.array().items(
-                Joi.string().max(40) // verified frontend
-            ).required(), // verified frontend
+            tags: Joi.array()
+                .items(
+                    Joi.string().max(40) // verified frontend
+                )
+                .required(), // verified frontend
             availability: Joi.boolean().required(), // verified frontend
             // productRating : Joi.number().max(5),
             discount: Joi.number().max(100).required(), // verified frontend
-            productImages: Joi.array().items(
-                Joi.object().keys({
-                    itemCode: Joi.string().max(100).allow(null, "").required(), // verified frontend
-                    textOnRibbonSatisfied: Joi.boolean().required(), // verified frontend
-                    imageURL: Joi.string().max(2048).required() // verified frontend
-                })
-            ).required(), // verified frontend
+            productImages: Joi.array()
+                .items(
+                    Joi.object().keys({
+                        itemCode: Joi.string()
+                            .max(100)
+                            .allow(null, "")
+                            .required(), // verified frontend
+                        textOnRibbonSatisfied: Joi.boolean().required(), // verified frontend
+                        imageURL: Joi.string().max(2048).required(), // verified frontend
+                    })
+                )
+                .required(), // verified frontend
             productThumbImage: Joi.string().max(2048).required(), // verified frontend
-            youTubeAdVideos: Joi.array().items(
-                Joi.string()
-            ),
+            youTubeAdVideos: Joi.array().items(Joi.string()),
             brandName: Joi.string().max(30).allow(null, ""),
             brandImage: Joi.string().max(2048).allow(null, ""),
 
@@ -615,12 +605,11 @@ let addNewProduct = {
             ),
             productInstallationAvailability: Joi.number().max(10),
             productInstallationServiceCost: Joi.number().max(99999),
-            installationServiceCostType: Joi.number().max(10)
-
+            installationServiceCostType: Joi.number().max(10),
         })
 
         await Joi.validate(decryptedData, schema)
-            .then((val) => {
+            .then(val => {
                 dataPassesValidation = true
             })
             .catch(e => {
@@ -634,7 +623,6 @@ let addNewProduct = {
         let dataToSendBack, productCount
 
         if (dataPassesValidation === true) {
-
             let productAlreadyExists = false
             let {
                 productName,
@@ -667,21 +655,17 @@ let addNewProduct = {
                 installationServiceCostType,
             } = decryptedData
 
-
             productAlreadyExists = false
 
             if (!productAlreadyExists) {
-
                 // check product code from existing count
                 // update count after the request for create is successful
 
                 let productId
 
-                await NewCount.findOne(
-                    {
-                        selectMe: "selectMe",
-                    }
-                )
+                await NewCount.findOne({
+                    selectMe: "selectMe",
+                })
                     .then(result => {
                         // categoryCount = result.categoryCount
                         // subCategoryCount = result.subCategoryCount
@@ -690,7 +674,8 @@ let addNewProduct = {
                     })
                     .catch(e => h.response(e))
 
-                productId = productTypeId + "-P" + unitsPlaceConverter(productCount)
+                productId =
+                    productTypeId + "-P" + unitsPlaceConverter(productCount)
 
                 const getCategoryId = () => {
                     const categoryId = productId.split("-")
@@ -699,7 +684,11 @@ let addNewProduct = {
 
                 const getSubCategoryId = () => {
                     const categoryId = productId.split("-")
-                    return categoryId[0].toUpperCase() + "-" + categoryId[1].toUpperCase()
+                    return (
+                        categoryId[0].toUpperCase() +
+                        "-" +
+                        categoryId[1].toUpperCase()
+                    )
                 }
 
                 const categoryId = getCategoryId()
@@ -711,43 +700,40 @@ let addNewProduct = {
                     productUploadCountIncrementAndSubCategoryNameData = {},
                     updateInCategoriesAndUpdateInVendorsData = {}
 
-
                 await Promise.all([
-                    NewProduct.create(
-                        {
-                            rLId,
-                            productId,
-                            productName,
-                            product_lowerCased_name: productName.toLowerCase(),
-                            productCode,
-                            basePrice,
-                            priceNotation,
-                            gstPercentage,
-                            productMaterials,
-                            finishingOptions,
-                            colorOptions,
-                            sizesAvailable,
-                            minQuantity,
-                            maxQuantity,
-                            productDescription,
-                            features,
-                            designStyles,
-                            tags,
-                            availability,
-                            productRating,
-                            discount,
-                            productImages,
-                            productThumbImage,
-                            productRating: 0,
-                            youTubeAdVideos,
-                            brandName,
-                            brandImage,
-                            productInstallers,
-                            productInstallationAvailability,
-                            productInstallationServiceCost,
-                            installationServiceCostType,
-                        }
-                    ),
+                    NewProduct.create({
+                        rLId,
+                        productId,
+                        productName,
+                        product_lowerCased_name: productName.toLowerCase(),
+                        productCode,
+                        basePrice,
+                        priceNotation,
+                        gstPercentage,
+                        productMaterials,
+                        finishingOptions,
+                        colorOptions,
+                        sizesAvailable,
+                        minQuantity,
+                        maxQuantity,
+                        productDescription,
+                        features,
+                        designStyles,
+                        tags,
+                        availability,
+                        productRating,
+                        discount,
+                        productImages,
+                        productThumbImage,
+                        productRating: 0,
+                        youTubeAdVideos,
+                        brandName,
+                        brandImage,
+                        productInstallers,
+                        productInstallationAvailability,
+                        productInstallationServiceCost,
+                        installationServiceCostType,
+                    }),
 
                     NewCount.findOneAndUpdate(
                         {
@@ -755,50 +741,41 @@ let addNewProduct = {
                         },
                         {
                             $inc: {
-                                productCount: 1
-                            }
+                                productCount: 1,
+                            },
                         },
                         {
-                            new: true
+                            new: true,
                         }
                     ),
 
-                    NewCategory[categoryName].findOne(
-                        {
-                            subCategoryId
-                        }
-                    ),
+                    NewCategory[categoryName].findOne({
+                        subCategoryId,
+                    }),
 
-                    NewEmptyCategories.findOne(
-                        {
-                            categoryWholeData: "all-cats-sCats-pTypes-incl-pCount"
-                        }
-                    )
-
+                    NewEmptyCategories.findOne({
+                        categoryWholeData: "all-cats-sCats-pTypes-incl-pCount",
+                    }),
                 ])
 
-                    .then((resultArray) => {
-                        productUploadCountIncrementAndSubCategoryNameData = resultArray.reduce(
-                            (all, item) => {
+                    .then(resultArray => {
+                        productUploadCountIncrementAndSubCategoryNameData =
+                            resultArray.reduce((all, item) => {
                                 all = {
                                     ...all,
-                                    ...item._doc
+                                    ...item._doc,
                                 }
 
                                 return all
-                            },
-                            {}
-                        )
-
-
+                            }, {})
                     })
-                    .catch((err) => {
+                    .catch(err => {
                         console.log(err)
                         return h.response(err)
                     })
 
-
-                let { allCategories } = productUploadCountIncrementAndSubCategoryNameData
+                let { allCategories } =
+                    productUploadCountIncrementAndSubCategoryNameData
 
                 let testUnique
 
@@ -820,15 +797,23 @@ let addNewProduct = {
                 }
 
                 let newCategoryData = incProdCountInNavBarAllCategoriesData()
-                productId = productUploadCountIncrementAndSubCategoryNameData.productId
+                productId =
+                    productUploadCountIncrementAndSubCategoryNameData.productId
 
                 dataToSendBack = {
-                    responseData: DataEncrypterAndDecrypter.encryptData({ nice: "nice" }),
-                    message: "Product created successfully and " + "incremented product type count to " + productUploadCountIncrementAndSubCategoryNameData.productCount
+                    responseData: DataEncrypterAndDecrypter.encryptData({
+                        nice: "nice",
+                    }),
+                    message:
+                        "Product created successfully and " +
+                        "incremented product type count to " +
+                        productUploadCountIncrementAndSubCategoryNameData.productCount,
                 }
 
-                productTypes = productUploadCountIncrementAndSubCategoryNameData.productTypes
-                subCategoryName = productUploadCountIncrementAndSubCategoryNameData.subCategoryName
+                productTypes =
+                    productUploadCountIncrementAndSubCategoryNameData.productTypes
+                subCategoryName =
+                    productUploadCountIncrementAndSubCategoryNameData.subCategoryName
 
                 productTypes = productTypes.map((item, i) => {
                     if (item.productTypeId === productTypeId) {
@@ -836,27 +821,26 @@ let addNewProduct = {
                             productId: productId,
                             thumb: productThumbImage,
                             subCategoryName,
-                            productName
+                            productName,
                         })
                     }
 
                     return item
                 })
 
-
                 await Promise.all([
                     NewCategory[categoryName].findOneAndUpdate(
                         {
-                            subCategoryId
+                            subCategoryId,
                         },
                         {
-                            productTypes
+                            productTypes,
                         }
                     ),
 
                     NewVendor.findOneAndUpdate(
                         {
-                            rLId
+                            rLId,
                         },
                         {
                             $push: {
@@ -864,76 +848,74 @@ let addNewProduct = {
                                     productId: productId,
                                     thumb: productThumbImage,
                                     subCategoryName,
-                                    productName
-                                }
-                            }
+                                    productName,
+                                },
+                            },
                         },
                         {
-                            new: true
+                            new: true,
                         }
                     ),
 
                     NewEmptyCategories.findOneAndUpdate(
                         {
-                            categoryWholeData: "all-cats-sCats-pTypes-incl-pCount"
+                            categoryWholeData:
+                                "all-cats-sCats-pTypes-incl-pCount",
                         },
                         {
-                            allCategories: [...newCategoryData]
+                            allCategories: [...newCategoryData],
                         },
                         {
-                            new: true
+                            new: true,
                         }
-                    )
+                    ),
                 ])
 
-
-                    .then((resultArray) => {
-                        updateInCategoriesAndUpdateInVendorsData = resultArray.reduce(
-                            (all, item, i) => {
+                    .then(resultArray => {
+                        updateInCategoriesAndUpdateInVendorsData =
+                            resultArray.reduce((all, item, i) => {
                                 all = {
                                     ...all,
-                                    ...item._doc
+                                    ...item._doc,
                                 }
 
                                 return all
-                            },
-                            {}
-                        )
+                            }, {})
                     })
-                    .catch((err) => {
+                    .catch(err => {
                         console.log(err)
                         return h.response(err)
                     })
 
                 dataToSendBack = {
                     ...dataToSendBack,
-                    anotherMessage: "Added to sub-category " + updateInCategoriesAndUpdateInVendorsData.subCategoryName + "and to " + updateInCategoriesAndUpdateInVendorsData.companyName
+                    anotherMessage:
+                        "Added to sub-category " +
+                        updateInCategoriesAndUpdateInVendorsData.subCategoryName +
+                        "and to " +
+                        updateInCategoriesAndUpdateInVendorsData.companyName,
                 }
-
             }
-        }
-
-        else {
+        } else {
             dataToSendBack = {
-                message: "Wrong data"
+                message: "Wrong data",
             }
 
-
-            // 
+            //
             // Encrypt data
-            // 
+            //
             dataToSendBack = {
-                responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1"
+                responseData:
+                    DataEncrypterAndDecrypter.encryptData(dataToSendBack),
+                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1",
             }
-            // 
+            //
             // Encrypt data
-            // 
+            //
         }
-
 
         return h.response(dataToSendBack)
-    }
+    },
 }
 
 let getProductData = {
@@ -943,19 +925,18 @@ let getProductData = {
     config: {
         cors: corsHeaders,
         auth: {
-            strategy: 'restricted',
+            strategy: "restricted",
         },
-        tags: ['api'],
+        tags: ["api"],
         validate: {
             payload: {
                 requestData: Joi.string(),
                 message: Joi.string(),
-            }
-        }
+            },
+        },
     },
 
     handler: async (request, h) => {
-
         let { requestData, message } = request.payload
 
         //
@@ -966,18 +947,15 @@ let getProductData = {
         // DECRYPT REQUEST DATA
         //
 
-
         /////// VALIDATE PAYLOAD //////////////////////////////////////
         let dataPassesValidation = false
-
-
 
         const schema = Joi.object().keys({
             productId: Joi.string().max(80).required(),
         })
 
         await Joi.validate(decryptedData, schema)
-            .then((val) => {
+            .then(val => {
                 dataPassesValidation = true
             })
             .catch(e => {
@@ -988,35 +966,36 @@ let getProductData = {
 
         const { rLId } = request.auth.credentials
 
-        let dataToSendBack, productFound = false
+        let dataToSendBack,
+            productFound = false
 
         if (dataPassesValidation === true) {
-
             let { productId } = decryptedData
 
             await NewProduct.findOne({
-                productId
+                productId,
             })
-                .then((result) => {
+                .then(result => {
                     if (result) {
                         productFound = true
                         dataToSendBack = result
 
-                        // 
+                        //
                         // Encrypt data
-                        // 
+                        //
                         dataToSendBack = {
-                            responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                            message: "Product found"
+                            responseData:
+                                DataEncrypterAndDecrypter.encryptData(
+                                    dataToSendBack
+                                ),
+                            message: "Product found",
                         }
-                        // 
+                        //
                         // Encrypt data
-                        // 
-                    }
-
-                    else {
+                        //
+                    } else {
                         dataToSendBack = {
-                            productFound: false
+                            productFound: false,
                         }
                     }
                 })
@@ -1024,31 +1003,26 @@ let getProductData = {
                     console.error(e)
                     return h.response(e)
                 })
-
-
-        }
-
-        else {
+        } else {
             dataToSendBack = {
-                message: "Wrong data"
+                message: "Wrong data",
             }
 
-
-            // 
+            //
             // Encrypt data
-            // 
+            //
             dataToSendBack = {
-                responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1"
+                responseData:
+                    DataEncrypterAndDecrypter.encryptData(dataToSendBack),
+                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1",
             }
-            // 
+            //
             // Encrypt data
-            // 
+            //
         }
 
         return h.response(dataToSendBack)
-    }
-
+    },
 }
 
 let getProductDataNoAuth = {
@@ -1058,20 +1032,19 @@ let getProductDataNoAuth = {
     config: {
         cors: corsHeaders,
         auth: {
-            strategy: 'restricted',
-            mode: 'try'
+            strategy: "restricted",
+            mode: "try",
         },
-        tags: ['api'],
+        tags: ["api"],
         validate: {
             payload: {
                 requestData: Joi.string(),
                 message: Joi.string(),
-            }
-        }
+            },
+        },
     },
 
     handler: async (request, h) => {
-
         let { requestData, message } = request.payload
 
         //
@@ -1081,7 +1054,6 @@ let getProductDataNoAuth = {
         //
         // DECRYPT REQUEST DATA
         //
-
 
         /////// VALIDATE PAYLOAD //////////////////////////////////////
         /////// VALIDATE PAYLOAD //////////////////////////////////////
@@ -1092,7 +1064,7 @@ let getProductDataNoAuth = {
         })
 
         await Joi.validate(decryptedData, schema)
-            .then((val) => {
+            .then(val => {
                 dataPassesValidation = true
             })
             .catch(e => {
@@ -1102,38 +1074,38 @@ let getProductDataNoAuth = {
         /////// VALIDATE PAYLOAD //////////////////////////////////////
         /////// VALIDATE PAYLOAD //////////////////////////////////////
 
-
         // const { rLId } = request.auth.credentials
 
-        let dataToSendBack, productFound = false
+        let dataToSendBack,
+            productFound = false
 
         if (dataPassesValidation === true) {
-
             let { productId } = decryptedData
 
             await NewProduct.findOne({
-                productId
+                productId,
             })
-                .then((result) => {
+                .then(result => {
                     if (result) {
                         productFound = true
                         dataToSendBack = result
 
-                        // 
+                        //
                         // Encrypt data
-                        // 
+                        //
                         dataToSendBack = {
-                            responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                            message: "Product found"
+                            responseData:
+                                DataEncrypterAndDecrypter.encryptData(
+                                    dataToSendBack
+                                ),
+                            message: "Product found",
                         }
-                        // 
+                        //
                         // Encrypt data
-                        // 
-                    }
-
-                    else {
+                        //
+                    } else {
                         dataToSendBack = {
-                            productFound: false
+                            productFound: false,
                         }
                     }
                 })
@@ -1141,31 +1113,26 @@ let getProductDataNoAuth = {
                     console.error(e)
                     return h.response(e)
                 })
-
-
-        }
-
-        else {
+        } else {
             dataToSendBack = {
-                message: "Wrong data"
+                message: "Wrong data",
             }
 
-
-            // 
+            //
             // Encrypt data
-            // 
+            //
             dataToSendBack = {
-                responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1"
+                responseData:
+                    DataEncrypterAndDecrypter.encryptData(dataToSendBack),
+                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1",
             }
-            // 
+            //
             // Encrypt data
-            // 
+            //
         }
 
         return h.response(dataToSendBack)
-    }
-
+    },
 }
 
 let getProductsDataOfQuery = {
@@ -1175,22 +1142,22 @@ let getProductsDataOfQuery = {
     config: {
         cors: corsHeaders,
         auth: {
-            strategy: 'restricted',
-            mode: 'try'
+            strategy: "restricted",
+            mode: "try",
         },
-        tags: ['api']
+        tags: ["api"],
     },
 
     handler: async (request, h) => {
-        let dataToSendBack, responseData;
+        let dataToSendBack, responseData
 
-        const { searchForProduct } = request.query;
+        const { searchForProduct } = request.query
 
-        await NewProduct.find({ 
+        await NewProduct.find({
             product_lowerCased_name: {
-                    $regex: new RegExp(searchForProduct)
-                } 
-            })
+                $regex: new RegExp(searchForProduct),
+            },
+        })
             .limit(5)
             .then(res => {
                 responseData = res
@@ -1198,22 +1165,22 @@ let getProductsDataOfQuery = {
             .catch(err => console.log(err))
 
         dataToSendBack = {
-            queriedProductsData: responseData
+            queriedProductsData: responseData,
         }
 
-        // 
+        //
         // Encrypt data
-        // 
+        //
         dataToSendBack = {
             responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-            message: "Sending top 25 products related to query parameter"
+            message: "Sending top 25 products related to query parameter",
         }
-        // 
+        //
         // Encrypt data
-        // 
+        //
 
-        return h.response(dataToSendBack);
-    }
+        return h.response(dataToSendBack)
+    },
 }
 
 let updateProductData = {
@@ -1223,19 +1190,18 @@ let updateProductData = {
     config: {
         cors: corsHeaders,
         auth: {
-            strategy: 'restricted',
+            strategy: "restricted",
         },
-        tags: ['api'],
+        tags: ["api"],
         validate: {
             payload: {
                 requestData: Joi.string(),
                 message: Joi.string(),
-            }
-        }
+            },
+        },
     },
 
     handler: async (request, h) => {
-
         let { requestData, message } = request.payload
 
         //
@@ -1246,80 +1212,96 @@ let updateProductData = {
         // DECRYPT REQUEST DATA
         //
 
-
         /////// VALIDATE PAYLOAD //////////////////////////////////////
         let dataPassesValidation = false
 
-
-
         const schema = Joi.object().keys({
-
             productName: Joi.string().max(60).required(), // verified frontend
             productCode: Joi.string().max(30).required(), // verified frontend
-            basePrice: Joi.number().integer().max(99999999).required().allow(null), // verified frontend
+            basePrice: Joi.number()
+                .integer()
+                .max(99999999)
+                .required()
+                .allow(null), // verified frontend
             priceNotation: Joi.number().max(30).required(),
             gstPercentage: Joi.number().max(100).required(), // verified frontend
-            productMaterials: Joi.array().items(
-                Joi.object().keys({
-                    materialCost: Joi.number().integer().max(99999999).required(), // verified frontend
-                    materialName: Joi.string().max(60).required(), // verified frontend
-                    materialGrade: Joi.string().max(30).allow(null, ""), // verified frontend
-                })
-            ).required(), // verified frontend
-            finishingOptions: Joi.array().items(
-                Joi.object().keys({
-                    finishName: Joi.string().max(30).required(), // verified frontend
-                    finishCode: Joi.string().max(30).allow(null, ""), // verified frontend
-                    finishImage: Joi.string().required(), // verified frontend
-                    finishCost: Joi.number().max(99999999)  // verified frontend
-                })
-            ).required(), // verified frontend
-            colorOptions: Joi.array().items(
-                Joi.object().keys({
-                    colorName: Joi.string().max(30).required(), // verified frontend
-                    colorCode: Joi.string().max(7).required(), // verified frontend
-                    colorCost: Joi.number().max(99999999) // verified frontend
-                })
-            ).required(), // verified frontend
+            productMaterials: Joi.array()
+                .items(
+                    Joi.object().keys({
+                        materialCost: Joi.number()
+                            .integer()
+                            .max(99999999)
+                            .required(), // verified frontend
+                        materialName: Joi.string().max(60).required(), // verified frontend
+                        materialGrade: Joi.string().max(30).allow(null, ""), // verified frontend
+                    })
+                )
+                .required(), // verified frontend
+            finishingOptions: Joi.array()
+                .items(
+                    Joi.object().keys({
+                        finishName: Joi.string().max(30).required(), // verified frontend
+                        finishCode: Joi.string().max(30).allow(null, ""), // verified frontend
+                        finishImage: Joi.string().required(), // verified frontend
+                        finishCost: Joi.number().max(99999999), // verified frontend
+                    })
+                )
+                .required(), // verified frontend
+            colorOptions: Joi.array()
+                .items(
+                    Joi.object().keys({
+                        colorName: Joi.string().max(30).required(), // verified frontend
+                        colorCode: Joi.string().max(7).required(), // verified frontend
+                        colorCost: Joi.number().max(99999999), // verified frontend
+                    })
+                )
+                .required(), // verified frontend
             sizesAvailable: Joi.array().items(
                 Joi.object().keys({
                     sizeName: Joi.string().max(100), // verified frontend
-                    sizeCost: Joi.number().max(99999999) // verified frontend
+                    sizeCost: Joi.number().max(99999999), // verified frontend
                 })
             ), // verified frontend
             minQuantity: Joi.number().max(99999999).required(), // verified frontend
             maxQuantity: Joi.number().max(99999999).required(), // verified frontend
             productDescription: Joi.string().max(500).required(), // verified frontend
             features: Joi.array().items(
-                Joi.string().max(200).allow(null, ""), // verified frontend
+                Joi.string().max(200).allow(null, "") // verified frontend
             ),
-            designStyles: Joi.array().items(
-                Joi.object().keys({
-                    styleId: Joi.number(), // verified frontend
-                    styleName: Joi.string().max(30).required() // verified frontend
-                })
-            ).required(), // verified frontend
+            designStyles: Joi.array()
+                .items(
+                    Joi.object().keys({
+                        styleId: Joi.number(), // verified frontend
+                        styleName: Joi.string().max(30).required(), // verified frontend
+                    })
+                )
+                .required(), // verified frontend
             productId: Joi.string().max(80).required(),
             // productTypeId : Joi.string().max(21).required(), // verified frontend
-            tags: Joi.array().items(
-                Joi.string().max(40) // verified frontend
-            ).required(), // verified frontend
+            tags: Joi.array()
+                .items(
+                    Joi.string().max(40) // verified frontend
+                )
+                .required(), // verified frontend
             availability: Joi.boolean().required(), // verified frontend
             // productRating : Joi.number().max(5),
             discount: Joi.number().max(100).required(), // verified frontend
-            productImages: Joi.array().items(
-                Joi.object().keys({
-                    itemCode: Joi.string().max(100).allow(null, "").required(), // verified frontend
-                    textOnRibbonSatisfied: Joi.boolean().required(), // verified frontend
-                    imageURL: Joi.string().max(2048).required() // verified frontend
-                })
-            ).required(), // verified frontend
+            productImages: Joi.array()
+                .items(
+                    Joi.object().keys({
+                        itemCode: Joi.string()
+                            .max(100)
+                            .allow(null, "")
+                            .required(), // verified frontend
+                        textOnRibbonSatisfied: Joi.boolean().required(), // verified frontend
+                        imageURL: Joi.string().max(2048).required(), // verified frontend
+                    })
+                )
+                .required(), // verified frontend
             productThumbImage: Joi.string().max(2048).required(), // verified frontend
             brandName: Joi.string().max(30).allow(null, ""),
             brandImage: Joi.string().max(2048).allow(null, ""),
-            youTubeAdVideos: Joi.array().items(
-                Joi.string()
-            ),
+            youTubeAdVideos: Joi.array().items(Joi.string()),
 
             productInstallers: Joi.array().items(
                 Joi.object().keys({
@@ -1331,12 +1313,11 @@ let updateProductData = {
             ),
             productInstallationAvailability: Joi.number().max(10),
             productInstallationServiceCost: Joi.number().max(99999),
-            installationServiceCostType: Joi.number().max(10)
-
+            installationServiceCostType: Joi.number().max(10),
         })
 
         await Joi.validate(decryptedData, schema)
-            .then((val) => {
+            .then(val => {
                 dataPassesValidation = true
             })
             .catch(e => {
@@ -1347,12 +1328,10 @@ let updateProductData = {
 
         const { rLId } = request.auth.credentials
 
-        let dataToSendBack, productFound = false
-
-
+        let dataToSendBack,
+            productFound = false
 
         if (dataPassesValidation === true) {
-
             let productAlreadyExists = false
             let {
                 productId,
@@ -1385,11 +1364,9 @@ let updateProductData = {
                 installationServiceCostType,
             } = decryptedData
 
-
-
             await NewProduct.findOneAndUpdate(
                 {
-                    productId
+                    productId,
                 },
                 {
                     productName,
@@ -1422,49 +1399,52 @@ let updateProductData = {
                     installationServiceCostType,
                 },
                 {
-                    new: true
+                    new: true,
                 }
             )
-                .then((result) => {
+                .then(result => {
                     if (result) {
                         productFound = true
                         dataToSendBack = result
 
-                        // 
+                        //
                         // Encrypt data
-                        // 
+                        //
                         dataToSendBack = {
-                            responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                            message: "Product found"
+                            responseData:
+                                DataEncrypterAndDecrypter.encryptData(
+                                    dataToSendBack
+                                ),
+                            message: "Product found",
                         }
-                        // 
+                        //
                         // Encrypt data
-                        // 
-                    }
+                        //
+                    } else {
+                        dataToSendBack = {
+                            productFound: false,
+                        }
 
-                    else {
-                        dataToSendBack = {
-                            productFound: false
-                        }
-
-                        // 
+                        //
                         // Encrypt data
-                        // 
+                        //
                         dataToSendBack = {
-                            responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                            message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1"
+                            responseData:
+                                DataEncrypterAndDecrypter.encryptData(
+                                    dataToSendBack
+                                ),
+                            message:
+                                "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1",
                         }
-                        // 
+                        //
                         // Encrypt data
-                        // 
+                        //
                     }
                 })
                 .catch(e => {
                     console.error(e)
                     return h.response(e)
                 })
-
-
 
             if (productFound) {
                 const getCategoryId = () => {
@@ -1474,12 +1454,22 @@ let updateProductData = {
 
                 const getSubCategoryId = () => {
                     const subCategoryId = productId.split("-")
-                    return subCategoryId[0].toUpperCase() + "-" + subCategoryId[1].toUpperCase()
+                    return (
+                        subCategoryId[0].toUpperCase() +
+                        "-" +
+                        subCategoryId[1].toUpperCase()
+                    )
                 }
 
                 const getProductTypeId = () => {
                     const productTypeId = productId.split("-")
-                    return productTypeId[0].toUpperCase() + "-" + productTypeId[1].toUpperCase() + "-" + productTypeId[2].toUpperCase()
+                    return (
+                        productTypeId[0].toUpperCase() +
+                        "-" +
+                        productTypeId[1].toUpperCase() +
+                        "-" +
+                        productTypeId[2].toUpperCase()
+                    )
                 }
 
                 const categoryId = getCategoryId()
@@ -1490,11 +1480,10 @@ let updateProductData = {
                 let productTypes = []
                 let subCategoryName
 
-                await NewCategory[categoryName].findOne(
-                    {
-                        subCategoryId
-                    }
-                )
+                await NewCategory[categoryName]
+                    .findOne({
+                        subCategoryId,
+                    })
                     .then(result => {
                         productTypes = result.productTypes
                         subCategoryName = result.subCategoryName
@@ -1503,22 +1492,17 @@ let updateProductData = {
 
                 productTypes = productTypes.map((item, i) => {
                     if (item.productTypeId === productTypeId) {
-
                         // let productExists = false
                         item.products = item.products.map((product, k) => {
                             if (product.productId === productId) {
                                 // productExists = true
-                                return (
-                                    {
-                                        productId: productId,
-                                        thumb: productThumbImage,
-                                        subCategoryName,
-                                        productName
-                                    }
-                                )
-                            }
-
-                            else {
+                                return {
+                                    productId: productId,
+                                    thumb: productThumbImage,
+                                    subCategoryName,
+                                    productName,
+                                }
+                            } else {
                                 return product
                             }
                         })
@@ -1527,20 +1511,20 @@ let updateProductData = {
                     return item
                 })
 
-
-
-                await NewCategory[categoryName].findOneAndUpdate(
-                    {
-                        subCategoryId
-                    },
-                    {
-                        productTypes
-                    }
-                )
+                await NewCategory[categoryName]
+                    .findOneAndUpdate(
+                        {
+                            subCategoryId,
+                        },
+                        {
+                            productTypes,
+                        }
+                    )
                     .then(result => {
                         dataToSendBack = {
                             ...dataToSendBack,
-                            anotherExtraMessage: "Added to sub-category " + subCategoryId
+                            anotherExtraMessage:
+                                "Added to sub-category " + subCategoryId,
                         }
                     })
                     .catch(e => {
@@ -1548,73 +1532,53 @@ let updateProductData = {
                         return h.response(e)
                     })
 
-
                 await NewVendor.findOneAndUpdate(
                     {
                         rLId,
-                        "products.productId": productId
+                        "products.productId": productId,
                     },
                     {
                         $set: {
                             "products.$.thumb": productThumbImage,
                             "products.$.productName": productName,
-                        }
+                        },
                     },
                     {
-                        new: true
+                        new: true,
                     }
                 )
-                    .then((result) => {
+                    .then(result => {
                         dataToSendBack = {
                             ...dataToSendBack,
-                            lastMessage: "Added to " + result.companyName
+                            lastMessage: "Added to " + result.companyName,
                         }
                     })
                     .catch(e => {
                         console.error(e)
                         return h.response(e)
                     })
-
-
-
-
             }
-
-
-
-
-
-
-
-
-
-
-
-
-        }
-
-        else {
+        } else {
             dataToSendBack = {
-                message: "Wrong data"
+                message: "Wrong data",
             }
 
-            // 
+            //
             // Encrypt data
-            // 
+            //
             dataToSendBack = {
-                responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1"
+                responseData:
+                    DataEncrypterAndDecrypter.encryptData(dataToSendBack),
+                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1",
             }
-            // 
+            //
             // Encrypt data
-            // 
+            //
         }
 
         return h.response(dataToSendBack)
-    }
-
+    },
 }
-
 
 let deleteProductData = {
     method: "DELETE",
@@ -1623,9 +1587,9 @@ let deleteProductData = {
     config: {
         cors: corsHeaders,
         auth: {
-            strategy: 'restricted',
+            strategy: "restricted",
         },
-        tags: ['api'],
+        tags: ["api"],
         // validate: {
         //     payload: {
         //         message: Joi.string(),
@@ -1635,23 +1599,17 @@ let deleteProductData = {
     },
 
     handler: async (request, h) => {
-
         // let { requestData, message } = request.payload
 
         let productId = request.query.pId
 
-
-
-
         /////// VALIDATE PAYLOAD //////////////////////////////////////
         let dataPassesValidation = false
-
-
 
         const schema = Joi.string().max(80).required()
 
         await Joi.validate(productId, schema)
-            .then((val) => {
+            .then(val => {
                 dataPassesValidation = true
             })
             .catch(e => {
@@ -1662,64 +1620,66 @@ let deleteProductData = {
 
         const { rLId } = request.auth.credentials
 
-        let dataToSendBack, productFound = false
+        let dataToSendBack,
+            productFound = false
 
         if (dataPassesValidation === true) {
-
             // let { productId } = decryptedData
-
 
             // console.log(productId)
 
             await NewProduct.findOneAndDelete(
                 {
-                    productId
-                },
+                    productId,
+                }
 
                 // {
-                //     remove : true 
+                //     remove : true
                 // }
             )
-                .then((result) => {
+                .then(result => {
                     if (result) {
                         productFound = true
                         dataToSendBack = result
 
-                        // 
+                        //
                         // Encrypt data
-                        // 
+                        //
                         dataToSendBack = {
-                            responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                            message: "Product found"
+                            responseData:
+                                DataEncrypterAndDecrypter.encryptData(
+                                    dataToSendBack
+                                ),
+                            message: "Product found",
                         }
-                        // 
+                        //
                         // Encrypt data
-                        // 
-                    }
+                        //
+                    } else {
+                        dataToSendBack = {
+                            productFound: false,
+                        }
 
-                    else {
-                        dataToSendBack = {
-                            productFound: false
-                        }
-
-                        // 
+                        //
                         // Encrypt data
-                        // 
+                        //
                         dataToSendBack = {
-                            responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                            message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1"
+                            responseData:
+                                DataEncrypterAndDecrypter.encryptData(
+                                    dataToSendBack
+                                ),
+                            message:
+                                "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1",
                         }
-                        // 
+                        //
                         // Encrypt data
-                        // 
+                        //
                     }
                 })
                 .catch(e => {
                     console.error(e)
                     return h.response(e)
                 })
-
-
 
             if (productFound) {
                 const getCategoryId = () => {
@@ -1729,12 +1689,22 @@ let deleteProductData = {
 
                 const getSubCategoryId = () => {
                     const subCategoryId = productId.split("-")
-                    return subCategoryId[0].toUpperCase() + "-" + subCategoryId[1].toUpperCase()
+                    return (
+                        subCategoryId[0].toUpperCase() +
+                        "-" +
+                        subCategoryId[1].toUpperCase()
+                    )
                 }
 
                 const getProductTypeId = () => {
                     const productTypeId = productId.split("-")
-                    return productTypeId[0].toUpperCase() + "-" + productTypeId[1].toUpperCase() + "-" + productTypeId[2].toUpperCase()
+                    return (
+                        productTypeId[0].toUpperCase() +
+                        "-" +
+                        productTypeId[1].toUpperCase() +
+                        "-" +
+                        productTypeId[2].toUpperCase()
+                    )
                 }
 
                 const categoryId = getCategoryId()
@@ -1745,11 +1715,10 @@ let deleteProductData = {
                 let productTypes = []
                 let subCategoryName
 
-                await NewCategory[categoryName].findOne(
-                    {
-                        subCategoryId
-                    }
-                )
+                await NewCategory[categoryName]
+                    .findOne({
+                        subCategoryId,
+                    })
                     .then(result => {
                         productTypes = result.productTypes
                         subCategoryName = result.subCategoryName
@@ -1758,7 +1727,6 @@ let deleteProductData = {
 
                 productTypes = productTypes.map((item, i) => {
                     if (item.productTypeId === productTypeId) {
-
                         // let productExists = false
                         item.products = item.products.map((product, k) => {
                             if (product.productId === productId) {
@@ -1772,9 +1740,7 @@ let deleteProductData = {
                                 //     }
                                 // )
                                 return null
-                            }
-
-                            else {
+                            } else {
                                 return product
                             }
                         })
@@ -1787,69 +1753,65 @@ let deleteProductData = {
                     return item
                 })
 
+                await NewCategory[categoryName]
+                    .findOneAndUpdate(
+                        {
+                            subCategoryId,
+                        },
+                        {
+                            productTypes,
+                        }
+                    )
+                    .then(result => {
+                        dataToSendBack = {
+                            ...dataToSendBack,
+                            anotherExtraMessage:
+                                "Removed from sub-category " + subCategoryId,
+                        }
+                    })
+                    .catch(e => {
+                        console.error(e)
+                        return h.response(e)
+                    })
 
-
-                await NewCategory[categoryName].findOneAndUpdate(
+                await NewVendor.findOneAndUpdate(
                     {
-                        subCategoryId
+                        rLId,
+                        "products.productId": productId,
                     },
                     {
-                        productTypes
+                        $pull: {
+                            products: {
+                                productId: productId,
+                            },
+                            // "products.$.productId" : productId,
+                            // "products.$.thumb" : productThumbImage,
+                            // "products.$.productName" : productName,
+                            // "products.$.subCategoryName" : subCategoryName
+                        },
+                    },
+                    {
+                        new: true,
                     }
                 )
                     .then(result => {
                         dataToSendBack = {
                             ...dataToSendBack,
-                            anotherExtraMessage: "Removed from sub-category " + subCategoryId
+                            lastMessage: "Deleted from " + result.companyName,
                         }
                     })
                     .catch(e => {
                         console.error(e)
                         return h.response(e)
                     })
-
-
-                await NewVendor.findOneAndUpdate(
-                    {
-                        rLId,
-                        "products.productId": productId
-                    },
-                    {
-                        $pull: {
-                            products: {
-                                "productId": productId,
-                            }
-                            // "products.$.productId" : productId,
-                            // "products.$.thumb" : productThumbImage,
-                            // "products.$.productName" : productName,
-                            // "products.$.subCategoryName" : subCategoryName
-                        }
-                    },
-                    {
-                        new: true
-                    }
-                )
-                    .then((result) => {
-                        dataToSendBack = {
-                            ...dataToSendBack,
-                            lastMessage: "Deleted from " + result.companyName
-                        }
-                    })
-                    .catch(e => {
-                        console.error(e)
-                        return h.response(e)
-                    })
-
 
                 // UPDATES NAVBAR DATA //
                 ///////////////////////////////
                 let newNavBarData = []
 
-                await NewEmptyCategories.findOne(
-                    {
-                        categoryWholeData: "all-cats-sCats-pTypes-incl-pCount"
-                    }
-                )
+                await NewEmptyCategories.findOne({
+                    categoryWholeData: "all-cats-sCats-pTypes-incl-pCount",
+                })
                     .then(result => {
                         let { allCategories } = result
 
@@ -1857,7 +1819,10 @@ let deleteProductData = {
                             return allCategories.map(cat => {
                                 cat.subCategories.map(sCat => {
                                     sCat.productTypes.map(pType => {
-                                        if (pType.productTypeId === productTypeId) {
+                                        if (
+                                            pType.productTypeId ===
+                                            productTypeId
+                                        ) {
                                             pType.productsCount--
                                         }
                                         return pType
@@ -1872,23 +1837,21 @@ let deleteProductData = {
                     })
                     .catch(e => h.response(e))
 
-
                 await NewEmptyCategories.findOneAndUpdate(
                     {
-                        categoryWholeData: "all-cats-sCats-pTypes-incl-pCount"
+                        categoryWholeData: "all-cats-sCats-pTypes-incl-pCount",
                     },
                     {
-                        allCategories: [...newNavBarData]
+                        allCategories: [...newNavBarData],
                     },
                     {
-                        new: true
+                        new: true,
                     }
                 )
                     .then(result => {
-
                         dataToSendBack = {
                             ...dataToSendBack,
-                            lastMessage: "Added to Navbar data too"
+                            lastMessage: "Added to Navbar data too",
                         }
 
                         // if(result){
@@ -1902,64 +1865,28 @@ let deleteProductData = {
                     .catch(e => h.response(e))
 
                 // UPDATES NAVBAR DATA //
-
-
-
-
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        }
-
-        else {
+        } else {
             dataToSendBack = {
-                message: "Wrong data"
+                message: "Wrong data",
             }
 
-
-            // 
+            //
             // Encrypt data
-            // 
+            //
             dataToSendBack = {
-                responseData: DataEncrypterAndDecrypter.encryptData(dataToSendBack),
-                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1"
+                responseData:
+                    DataEncrypterAndDecrypter.encryptData(dataToSendBack),
+                message: "TOXIC_DATA_ACTIVATED>LOCATION_TRACKED>196.0.0.1",
             }
-            // 
+            //
             // Encrypt data
-            // 
+            //
         }
 
         return h.response(dataToSendBack)
-    }
-
+    },
 }
-
 
 let ProductsRoute = [
     addNewProduct,
@@ -1967,9 +1894,7 @@ let ProductsRoute = [
     updateProductData,
     deleteProductData,
     getProductDataNoAuth,
-    getProductsDataOfQuery
+    getProductsDataOfQuery,
 ]
 
 module.exports = ProductsRoute
-
-

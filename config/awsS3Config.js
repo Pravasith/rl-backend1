@@ -1,4 +1,4 @@
-'use strict'
+"use strict"
 
 const baseBucketURL = "rolling-logs/images/"
 
@@ -31,17 +31,15 @@ const s3BucketCredentials = {
         },
 
         appData: {
-            appImages: "app-data/app-images"
-        }
+            appImages: "app-data/app-images",
+        },
     },
 
-    "accessKeyId": "",
-    "secretAccessKey": "",
-    "s3URL": "https://",
-    
-
+    accessKeyId: "",
+    secretAccessKey: "",
+    s3URL: "https://",
 }
 
 module.exports = {
-    s3BucketCredentials: s3BucketCredentials
+    s3BucketCredentials: s3BucketCredentials,
 }
